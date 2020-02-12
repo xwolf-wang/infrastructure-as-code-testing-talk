@@ -25,6 +25,8 @@ up, it should be free, but you are completely responsible for all AWS charges.
 
 1. Install [Docker](https://www.docker.com/).
 1. Install [Golang](https://golang.org/), minimum version `1.13`.
+1. China link https://studygolang.com/dl
+wget https://studygolang.com/dl/golang/go1.13.7.darwin-amd64.pkg
 1. You'll need access to a [Kubernetes](https://kubernetes.io/) cluster to run these tests. **Recommended option**: 
    If you're using the [Docker Desktop app](https://www.docker.com/products/docker-desktop), then you already have a local 
    [Kubernetes cluster installed](https://www.docker.com/blog/kubernetes-is-now-available-in-docker-desktop-stable-channel/)!

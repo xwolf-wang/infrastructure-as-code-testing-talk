@@ -3,10 +3,8 @@ package test
 import (
 	"fmt"
 	"github.com/gruntwork-io/terratest/modules/docker"
-	http_helper "github.com/gruntwork-io/terratest/modules/http-helper"
+	"github.com/gruntwork-io/terratest/modules/http-helper"
 	"github.com/gruntwork-io/terratest/modules/k8s"
-	"github.com/gruntwork-io/terratest/modules/random"
-	"strings"
 	"testing"
 	"time"
 )
@@ -23,7 +21,8 @@ func TestDockerKubernetesUnit(t *testing.T) {
 
 	// To ensure we can reuse the resource config on the same cluster to test different scenarios, we setup a unique
 	// namespace for the resources for this test. Note that namespaces must be lowercase.
-	namespaceName := strings.ToLower(random.UniqueId())
+	//namespaceName := strings.ToLower(random.UniqueId())
+	namespaceName := "geode"
 
 	// Setup the kubectl config and context. Here we choose to use the defaults, which is:
 	// - HOME/.kube/config for the kubectl config file
@@ -31,10 +30,10 @@ func TestDockerKubernetesUnit(t *testing.T) {
 	options := k8s.NewKubectlOptions("", "", namespaceName)
 
 	// At the end of the test, make sure to delete the namespace
-	defer k8s.DeleteNamespace(t, options, namespaceName)
+	//defer k8s.DeleteNamespace(t, options, namespaceName)
 
 	// Create the namespace
-	k8s.CreateNamespace(t, options, namespaceName)
+	//k8s.CreateNamespace(t, options, namespaceName)
 
 	// At the end of the test, run `kubectl delete -f RESOURCE_CONFIG` to clean up any resources that were created.
 	defer k8s.KubectlDelete(t, options, kubeResourcePath)
@@ -72,5 +71,6 @@ func validateK8SApp(t *testing.T, options *k8s.KubectlOptions) {
 func serviceUrl(t *testing.T, options *k8s.KubectlOptions) string {
 	service := k8s.GetService(t, options, "hello-world-app-service")
 	endpoint := k8s.GetServiceEndpoint(t, options, service, 8080)
-	return fmt.Sprintf("http://%s", endpoint)
+	fmt.Printf("-------------------------------------------------------------------%s", endpoint)
+	return fmt.Sprintf("http://%s", "hello-world-app-service-geode.127.0.0.1.nip.io")
 }
